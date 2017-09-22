@@ -8,43 +8,63 @@
 public class Rover
 {
     // fields
-    String name;
-    int x;
-    int y;
-    int dir; // 0=North, 1=East, 2=South, 3=West
+    private String name;
+    private int x;
+    private int y;
+    private int dir; // 0=North, 1=East, 2=South, 3=West
     
     
     // constructor(s)
-    public Rover(String name)
-    {
+
+    
+    public Rover(String name, int x, int y, int dir) {
         this.name = name;
-        this.x = 0;
-        this.y = 0;
-        this.dir = 0;
+        this.x = x;
+        this.y = y;
+        this.dir = dir;
     }
     
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public void setDir(int dir){
+        this.dir = dir;
+    }
     
     // methods - stuff the Rover can do
-    public void move()
+    private String dirToStr(int num){
+        if (num == 0){
+            return "North";
+        } else if (num == 1) {
+            return "East";
+        } else if (num == 2) {
+            return "South";
+        } else {
+            return "West";
+        }
+    }
+    
+    public void move(int v)
     {
         if (dir == 0)
         {
-            y += 1;
+            y += v;
         }
         else if (dir == 1)
         {
-            x += 1;
+            x += v;
         }
         else if (dir == 2)
         {
-            y -= 1;
+            y -= v;
         }
         else 
         {
-            x -= 1;
+            x -= v;
         }
         
-        System.out.println(name + " moved in direction " + dir);
+        System.out.println(name + " moved " + dirToStr(dir) + " by " + v);
     }
     
     public void rotateLeft() 

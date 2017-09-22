@@ -7,15 +7,27 @@
  */
 public class RoverRunner
 {
+    public static void printRover(Rover r) {
+        System.out.println(r);
+        
+    }
+    
     public static void main(String[] arrrggggggs)
     {
-        Rover r1 = new Rover("Curiosity");
-        Rover r2 = new Rover("Spirit");
-        Rover r3 = new Rover("Sojourner");
+        Rover r1 = new Rover("Curiosity", 0, 0, 0);
+        Rover r2 = new Rover("Spirit", 0, 0, 0);
+        Rover r3 = new Rover("Sojourner", 0, 0, 0);
+        Rover r4 = new Rover("Oppertunity", 0, 0, 0);
         
-        System.out.println(r1);
+        System.out.println(r4);
         
-        r1.move();
+        r4.setName("Hello, World!");
+        printRover(r4);
+        
+        r4.move(3);
+        printRover(r4);
+        
+        /*r1.move();
         System.out.println(r1);
 
         r1.rotateRight();
@@ -34,6 +46,6 @@ public class RoverRunner
         System.out.println(r3);
         
         r1.move();
-        System.out.println(r1);
+        System.out.println(r1);*/
     }
 }
