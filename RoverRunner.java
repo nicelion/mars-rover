@@ -27,25 +27,11 @@ public class RoverRunner
         r4.move(3);
         printRover(r4);
         
-        /*r1.move();
-        System.out.println(r1);
-
-        r1.rotateRight();
-        System.out.println(r1);
+        r4.kill(r1);
+        r1.kill(r3);
         
-        r2.rotateLeft();
-        System.out.println(r2);
+        r2.kill(r2);
         
-        r2.move();
-        System.out.println(r2);
-        
-        r3.rotateLeft();
-        System.out.println(r3);
-        
-        r3.move();
-        System.out.println(r3);
-        
-        r1.move();
-        System.out.println(r1);*/
+ 
     }
 }
