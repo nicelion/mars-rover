@@ -15,7 +15,7 @@ public class RoverRunner
     public static void main(String[] arrrggggggs)
     {
         Rover r1 = new Rover("Curiosity", 0, 0, 0);
-        Rover r2 = new Rover("Spirit", 0, 0, 0);
+        /*Rover r2 = new Rover("Spirit", 0, 0, 0);
         Rover r3 = new Rover("Sojourner", 0, 0, 0);
         Rover r4 = new Rover("Oppertunity", 0, 0, 0);
         
@@ -30,7 +30,33 @@ public class RoverRunner
         r4.kill(r1);
         r1.kill(r3);
         
-        r2.kill(r2);
+        r2.kill(r2);*/
+        
+        r1.move(3);
+        System.out.println(r1);
+        r1.rotateLeft();
+        System.out.println(r1);
+        
+        r1.teleport(40,12);
+        System.out.println(r1);
+        
+        r1.goHome();
+        System.out.println(r1);
+        
+        System.out.println();
+        
+        r1.takePicture();
+        r1.takePicture();
+        r1.takePicture();
+        r1.takePicture();
+        r1.takePicture();
+        r1.takePicture();
+        r1.takePicture();
+        r1.takePicture();
+        r1.takePicture();
+        r1.takePicture();
+        r1.takePicture();
+        r1.takePicture("Black and White");
         
  
     }

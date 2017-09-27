@@ -16,6 +16,8 @@ public class Rover
     private boolean isAlive;
     private double batteryPercent;
     private int numPics;
+    private int maxPics;
+    
     
     
     // constructor(s)
@@ -34,6 +36,8 @@ public class Rover
         this.isAlive = true;
         this.batteryPercent = 100;
         this.numPics = 0;
+        this.maxPics = 10;
+        
     }
     
     /**
@@ -45,17 +49,7 @@ public class Rover
     }
     
     
-    /**
-     * Takes a picture at the rover's current coordinace
-     */
-    public void takePicture() {
-        if (this.isAlive) {
-            System.out.println();
-        } else {
-            printDead("take picture");
-        }
-    }
-    
+
     /**
      * Set the direction of the rover (0-3)
      * @param dir value of direction (0 - north, 1 - east, 2 - south, 3 - west)
@@ -70,22 +64,7 @@ public class Rover
     
     // methods - stuff the Rover can do
     
-    /**
-     * Returns int dir value as string
-     * @param num takes num value of direction
-     * @return string of dir
-     */
-    private String dirToStr(int num){
-        if (num == 0){
-            return "North";
-        } else if (num == 1) {
-            return "East";
-        } else if (num == 2) {
-            return "South";
-        } else {
-            return "West";
-        }
-    }
+
     
     public void move(int v)
     {
@@ -107,7 +86,7 @@ public class Rover
                 x -= v;
             }
             
-            System.out.println(name + " moved " + dirToStr(dir) + " by " + v);
+            System.out.println(name + " moved " + getDirectionName(dir) + " by " + v);
         } else {
             printDead("move");
         }
@@ -145,6 +124,65 @@ public class Rover
         }
     }
 
+    public void teleport(int x, int y) {
+        if (isAlive){
+            this.x = x;
+            this.y = y;
+            System.out.println(this.name + " has teleported! It's coordinance is now (" + x + ", " + y + ")!");
+        } else {
+            printDead("teleport");
+        }
+    }
+    
+    public void goHome() {
+        if (isAlive) {
+            this.x = 0;
+            this.y = 0;
+            System.out.println(this.name + " has made it home!");
+        } else {
+            printDead("go home");
+        }
+    }
+    
+    
+    
+    /*******************************************PICTUERES*************************************************/    
+    
+    /**
+     * Takes a picture at the rover's current coordinace
+     */
+    public void takePicture() {
+        if (this.isAlive) {
+            if (numPics < maxPics){
+                System.out.println(this.name + " has taken a picture at (" + this.x + ", " + this.y + ") facing " + getDirectionName(this.dir) + "!");
+                numPics += 1;
+            } else {
+                storageFull();
+            }
+        } else {
+            printDead("take picture");
+        }
+    }
+    /**
+     * Takes a picture with filter
+     * @param filter name of filter you want to use
+     */
+    public void takePicture(String filter) {
+        if (this.isAlive) {
+            System.out.println(this.name + " has taken a picture at (" + this.x + ", " + this.y + ") using the \"" + filter + "\" filter!");
+            numPics += 1;
+        } else {
+            printDead("take picture");
+        }
+   
+    }
+    
+    private void storageFull() {
+        System.out.println("Storage full! Please transmit pictures back to earth!");
+    
+    }
+    
+    
     /**
      * Kill another rover
      * @param other Rover object you want to kill
@@ -163,13 +201,28 @@ public class Rover
             printDead("kill " + other.name);
         }
     }
-    
+    /**
+     * Returns int dir value as string
+     * @param num takes num value of direction
+     * @return string of dir
+     */
+    private String getDirectionName(int num){
+        if (num == 0){
+            return "North";
+        } else if (num == 1) {
+            return "East";
+        } else if (num == 2) {
+            return "South";
+        } else {
+            return "West";
+        }
+    }
     private void printDead(String action) {
         System.out.println(this.name + " could not complete action \"" + action + "\" because it is dead");
     }
     
     public String toString() 
     {
-        return "Rover[name=" + name + ", x=" + x + ", y=" + y + ", dir=" + dir + "]";
+        return "Rover[name=" + name + ", x=" + x + ", y=" + y + ", dir=" + getDirectionName(this.dir) + "]";
     }
 }
