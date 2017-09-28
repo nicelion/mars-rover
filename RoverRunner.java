@@ -58,6 +58,11 @@ public class RoverRunner
         r1.takePicture();
         r1.takePicture("Black and White");
         
+        
+        r1.transmitPictures();
+        
+        r1.takePicture();
+        
  
     }
 }

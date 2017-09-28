@@ -6,6 +6,9 @@
  * @author Ian Thompson 
  * @version 9/26/17
  */
+
+import java.util.concurrent.TimeUnit;
+
 public class Rover
 {
     // fields
@@ -14,7 +17,7 @@ public class Rover
     private int y;
     private int dir; // 0=North, 1=East, 2=South, 3=West
     private boolean isAlive;
-    private double batteryPercent;
+    private double battery;
     private int numPics;
     private int maxPics;
     
@@ -34,7 +37,7 @@ public class Rover
         this.y = y;
         this.dir = dir;
         this.isAlive = true;
-        this.batteryPercent = 100;
+        this.battery = 100;
         this.numPics = 0;
         this.maxPics = 10;
         
@@ -58,14 +61,23 @@ public class Rover
         this.dir = dir;
     }
     
+    
+    /*******************************************ENERGY*****************************************************/
+    
     private void adjustBattery(double b){
+        if (battery > 0 && battery <= 100) {
+            if (c > (100 - battery)
+        } 
         
     }
     
     // methods - stuff the Rover can do
     
 
-    
+    /**
+     * Move the rover in by "v" in the current direction the rover is facing
+     * @param v how far you want the rover to move.
+     */
     public void move(int v)
     {
         if (isAlive) {
@@ -123,7 +135,12 @@ public class Rover
             printDead("rotate right");;
         }
     }
-
+    
+    /**
+     * Teleports to rover to given x and y coordinant.
+     * @param x x position
+     * @param y y position
+     */
     public void teleport(int x, int y) {
         if (isAlive){
             this.x = x;
@@ -134,6 +151,9 @@ public class Rover
         }
     }
     
+    /**
+     * Sends the rover home, or to (0,0)
+     */
     public void goHome() {
         if (isAlive) {
             this.x = 0;
@@ -177,10 +197,38 @@ public class Rover
    
     }
     
+    /**
+     * Called when storage is full. Prints and error message.
+     */
     private void storageFull() {
         System.out.println("Storage full! Please transmit pictures back to earth!");
     
     }
+    
+    /**
+     * Transmit pictures back to earth. Set numPics back to zero.
+     */
+    public void transmitPictures() {
+        
+        if (this.isAlive) {
+            System.out.println("Transmitting.....");
+            this.numPics = 0; 
+            try        
+                {
+                    Thread.sleep(5000);
+                } 
+            catch(InterruptedException ex) 
+                {
+                    Thread.currentThread().interrupt();
+                }
+                
+            System.out.println("Transmitted!");
+        } else {
+            printDead("transmit pictures");
+        }
+    }
+        
+    
     
     
     /**
