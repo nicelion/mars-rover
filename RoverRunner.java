@@ -63,8 +63,12 @@ public class RoverRunner
         
         r1.takePicture();*/
         
-        r1.adjustBattery(-49);
-        r1.adjustBattery(-1);
+        r1.move(3);
+        r1.rotateRight();
+        r1.move(11);
+        
+        r1.teleport(10, -1);
+        
         
  
     }

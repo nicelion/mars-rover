@@ -64,7 +64,7 @@ public class Rover
     
     /*******************************************ENERGY*****************************************************/
     
-    public void adjustBattery(double b){
+    private void adjustBattery(double b){
         if (battery > 0 && battery <= 100) {
             double battLeft = 100 - battery;
             if (b > battLeft){
@@ -73,14 +73,31 @@ public class Rover
             } else {
                 if (this.battery + b <= 0) {
                     this.battery = 0;
+                    this.isAlive = false;
                     System.out.println("Battery at zero! Please charge!"); 
                 } else {
                     this.battery += b;
                     System.out.println("Battery changed by " + b + ". Battery now at " + this.battery + "!");
                 }
             }
-        } 
+        }     
         
+    }
+    
+    /**
+     * Charge the rover's value for a specific amount of time. Uses 10 * time = battery percent.
+     * @param time time you want rover to charge for
+     */
+    public void chargeBattery(int time) {
+        
+        System.out.println("Charging battery for " + time + " seconds!");
+        
+        try {
+            Thread.sleep(time * 1000);
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        adjustBattery(10 * time);
     }
     
     // methods - stuff the Rover can do
@@ -111,6 +128,7 @@ public class Rover
             }
             
             System.out.println(name + " moved " + getDirectionName(dir) + " by " + v);
+            adjustBattery(v * -4);
         } else {
             printDead("move");
         }
@@ -126,7 +144,8 @@ public class Rover
                 dir = 3;
             }
             
-            System.out.println(name + " turned to the left");    
+            System.out.println(name + " turned to the left");
+            adjustBattery(-5);
         } else {
            printDead("rotate left");
         }
@@ -143,6 +162,7 @@ public class Rover
             }
             
             System.out.println(name + " turned to the right");     
+            adjustBattery(-5);
         } else {
             printDead("rotate right");;
         }
@@ -158,6 +178,7 @@ public class Rover
             this.x = x;
             this.y = y;
             System.out.println(this.name + " has teleported! It's coordinance is now (" + x + ", " + y + ")!");
+            adjustBattery(-10);
         } else {
             printDead("teleport");
         }
@@ -171,6 +192,7 @@ public class Rover
             this.x = 0;
             this.y = 0;
             System.out.println(this.name + " has made it home!");
+            adjustBattery(-10);
         } else {
             printDead("go home");
         }
@@ -188,6 +210,7 @@ public class Rover
             if (numPics < maxPics){
                 System.out.println(this.name + " has taken a picture at (" + this.x + ", " + this.y + ") facing " + getDirectionName(this.dir) + "!");
                 numPics += 1;
+                adjustBattery(-2);
             } else {
                 storageFull();
             }
@@ -195,6 +218,7 @@ public class Rover
             printDead("take picture");
         }
     }
+    
     /**
      * Takes a picture with filter
      * @param filter name of filter you want to use
@@ -203,6 +227,7 @@ public class Rover
         if (this.isAlive) {
             System.out.println(this.name + " has taken a picture at (" + this.x + ", " + this.y + ") using the \"" + filter + "\" filter!");
             numPics += 1;
+            adjustBattery(-2);
         } else {
             printDead("take picture");
         }
@@ -235,6 +260,7 @@ public class Rover
                 }
                 
             System.out.println("Transmitted!");
+            adjustBattery(-5);
         } else {
             printDead("transmit pictures");
         }
