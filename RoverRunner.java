@@ -30,7 +30,7 @@ public class RoverRunner
         r4.kill(r1);
         r1.kill(r3);
         
-        r2.kill(r2);*/
+        r2.kill(r2);
         
         r1.move(3);
         System.out.println(r1);
@@ -61,7 +61,10 @@ public class RoverRunner
         
         r1.transmitPictures();
         
-        r1.takePicture();
+        r1.takePicture();*/
+        
+        r1.adjustBattery(-49);
+        r1.adjustBattery(-1);
         
  
     }

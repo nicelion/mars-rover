@@ -37,7 +37,7 @@ public class Rover
         this.y = y;
         this.dir = dir;
         this.isAlive = true;
-        this.battery = 100;
+        this.battery = 50;
         this.numPics = 0;
         this.maxPics = 10;
         
@@ -64,9 +64,21 @@ public class Rover
     
     /*******************************************ENERGY*****************************************************/
     
-    private void adjustBattery(double b){
+    public void adjustBattery(double b){
         if (battery > 0 && battery <= 100) {
-            if (b > (100 - battery)){}
+            double battLeft = 100 - battery;
+            if (b > battLeft){
+                System.out.println("Charged to 100");
+                this.battery = 100;
+            } else {
+                if (this.battery + b <= 0) {
+                    this.battery = 0;
+                    System.out.println("Battery at zero! Please charge!"); 
+                } else {
+                    this.battery += b;
+                    System.out.println("Battery changed by " + b + ". Battery now at " + this.battery + "!");
+                }
+            }
         } 
         
     }
