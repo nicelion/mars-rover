@@ -66,7 +66,7 @@ public class Rover
     
     private void adjustBattery(double b){
         if (battery > 0 && battery <= 100) {
-            if (c > (100 - battery)
+            if (b > (100 - battery)){}
         } 
         
     }
