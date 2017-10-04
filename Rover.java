@@ -20,8 +20,7 @@ public class Rover
     private double battery;
     private int numPics;
     private int maxPics;
-    
-    
+
     
     // constructor(s)
     /**
@@ -40,9 +39,9 @@ public class Rover
         this.battery = 50;
         this.numPics = 0;
         this.maxPics = 10;
-        
+
     }
-    
+
     /**
      *  Change the name of the rover
      *  @param name name of rover
@@ -50,8 +49,7 @@ public class Rover
     public void setName(String name) {
         this.name = name;
     }
-    
-    
+
 
     /**
      * Set the direction of the rover (0-3)
@@ -60,10 +58,8 @@ public class Rover
     public void setDir(int dir){
         this.dir = dir;
     }
-    
-    
+
     /*******************************************ENERGY*****************************************************/
-    
     private void adjustBattery(double b){
         if (battery > 0 && battery <= 100) {
             double battLeft = 100 - battery;
@@ -81,17 +77,17 @@ public class Rover
                 }
             }
         }     
-        
+
     }
-    
+
     /**
      * Charge the rover's value for a specific amount of time. Uses 10 * time = battery percent.
      * @param time time you want rover to charge for
      */
     public void chargeBattery(int time) {
-        
+
         System.out.println("Charging battery for " + time + " seconds!");
-        
+
         try {
             Thread.sleep(time * 1000);
         } catch(InterruptedException ex) {
@@ -99,9 +95,8 @@ public class Rover
         }
         adjustBattery(10 * time);
     }
-    
+
     // methods - stuff the Rover can do
-    
 
     /**
      * Move the rover in by "v" in the current direction the rover is facing
@@ -126,48 +121,48 @@ public class Rover
             {
                 x -= v;
             }
-            
+
             System.out.println(name + " moved " + getDirectionName(dir) + " by " + v);
             adjustBattery(v * -4);
         } else {
             printDead("move");
         }
     }
-    
+
     public void rotateLeft() 
     {
         if (isAlive) {
             dir -= 1;
-            
+
             if (dir < 0)
             {
                 dir = 3;
             }
-            
+
             System.out.println(name + " turned to the left");
             adjustBattery(-5);
         } else {
-           printDead("rotate left");
+            printDead("rotate left");
         }
     }
-    
+
     public void rotateRight()
     {
         if (isAlive) {
             dir += 1;
-            
+
             if (dir == 4)
             {
                 dir = 0;
             }
-            
+
             System.out.println(name + " turned to the right");     
             adjustBattery(-5);
         } else {
             printDead("rotate right");;
         }
     }
-    
+
     /**
      * Teleports to rover to given x and y coordinant.
      * @param x x position
@@ -183,7 +178,7 @@ public class Rover
             printDead("teleport");
         }
     }
-    
+
     /**
      * Sends the rover home, or to (0,0)
      */
@@ -197,11 +192,10 @@ public class Rover
             printDead("go home");
         }
     }
-    
-    
+
     
     /*******************************************PICTUERES*************************************************/    
-    
+
     /**
      * Takes a picture at the rover's current coordinace
      */
@@ -218,7 +212,19 @@ public class Rover
             printDead("take picture");
         }
     }
-    
+
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y  a sample parameter for a method
+     * @return    the sum of x and y
+     */
+    public int sampleMethod(int y)
+{
+    // put your code here
+    return y;
+}
+
     /**
      * Takes a picture with filter
      * @param filter name of filter you want to use
@@ -231,43 +237,41 @@ public class Rover
         } else {
             printDead("take picture");
         }
-   
+
     }
-    
+
     /**
      * Called when storage is full. Prints and error message.
      */
     private void storageFull() {
         System.out.println("Storage full! Please transmit pictures back to earth!");
-    
+
     }
-    
+
     /**
      * Transmit pictures back to earth. Set numPics back to zero.
      */
     public void transmitPictures() {
-        
+
         if (this.isAlive) {
             System.out.println("Transmitting.....");
             this.numPics = 0; 
             try        
-                {
-                    Thread.sleep(5000);
-                } 
+            {
+                Thread.sleep(5000);
+            } 
             catch(InterruptedException ex) 
-                {
-                    Thread.currentThread().interrupt();
-                }
-                
+            {
+                Thread.currentThread().interrupt();
+            }
+
             System.out.println("Transmitted!");
             adjustBattery(-5);
         } else {
             printDead("transmit pictures");
         }
     }
-        
-    
-    
+
     
     /**
      * Kill another rover
@@ -287,6 +291,7 @@ public class Rover
             printDead("kill " + other.name);
         }
     }
+
     /**
      * Returns int dir value as string
      * @param num takes num value of direction
@@ -303,8 +308,14 @@ public class Rover
             return "West";
         }
     }
+
     private void printDead(String action) {
         System.out.println(this.name + " could not complete action \"" + action + "\" because it is dead");
+    }
+
+    
+    public String getName() {
+        return this.name;
     }
     
     public String toString() 
