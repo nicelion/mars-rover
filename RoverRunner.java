@@ -5,6 +5,11 @@
  * @author (your name) 
  * @version (a version number or a date)
  */
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class RoverRunner
 {
     public static void printRover(Rover r) {
@@ -89,6 +94,16 @@ public class RoverRunner
         
         while (running) {
             // Input name
+            
+            try {
+                BufferedReader br = new BufferedReader(new FileReader("menu.txt"));
+                String line = null;
+                 while ((line = br.readLine()) != null) {
+                   System.out.println(line);
+                }
+            } catch (IOException e){
+                System.out.println("Could not load menu");
+            }
             System.out.print("Enter the name of the Rover to act: ");
             String name = input.readString();
             
@@ -100,18 +115,18 @@ public class RoverRunner
                 System.out.print("Enter a command: ");
                 String command = input.readString();
                 
-                if (command.equals("move")) {
+                if (command.equals("0")) {
                     System.out.print("Enter distance to move: ");
                     int distance = input.readInt();
                     actor.move(distance);
                 }
-                else if (command.equals("rotate right")) {
+                else if (command.equals("1")) {
                     actor.rotateRight();
                 }
-                else if (command.equals("rotate left")) {
+                else if (command.equals("2")) {
                     actor.rotateLeft();
                 }
-                else if (command.equals("kill")) {
+                else if (command.equals("3")) {
                     System.out.print("Enter the name the target rover: ");
                     String targetName = input.readString();
                     
@@ -124,6 +139,27 @@ public class RoverRunner
                     else {
                         System.out.println("Error: No such target.");
                     }
+                } else if (command.equals("4")){
+                    System.out.println("For how many second would you like to charge?");
+                    int batt = input.readInt();
+                    actor.chargeBattery(batt);
+                } else if (command.equals("5")) {
+                    System.out.println("Please type x position: ");
+                    int x = input.readInt();
+                    System.out.println("Please type y position: ");
+                    int y = input.readInt();
+                    
+                    actor.teleport(x,y);
+                } else if (command.equals("6")) {
+                    actor.goHome();
+                } else if (command.equals("7")) {
+                    actor.takePicture();
+                } else if (command.equals("8")) {
+                    System.out.println("What filter do you want to add?");
+                    String filter = input.readString();
+                    actor.takePicture(filter);
+                } else if (command.equals("9")){
+                    actor.transmitPictures();
                 }
                 else {
                     System.out.println("Error: Invalid command.");

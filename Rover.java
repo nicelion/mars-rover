@@ -8,7 +8,9 @@
  */
 
 import java.util.concurrent.TimeUnit;
-
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 public class Rover
 {
     // fields
@@ -87,7 +89,15 @@ public class Rover
     public void chargeBattery(int time) {
 
         System.out.println("Charging battery for " + time + " seconds!");
-
+        
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+               System.out.println(".");
+            }
+        }, 0, time * 1000);
+        
         try {
             Thread.sleep(time * 1000);
         } catch(InterruptedException ex) {
@@ -213,17 +223,7 @@ public class Rover
         }
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-{
-    // put your code here
-    return y;
-}
+   
 
     /**
      * Takes a picture with filter
@@ -292,6 +292,20 @@ public class Rover
         }
     }
 
+    public void attack(Rover other, int power) {
+        
+       int otherPower = randomWithRange(1, 100);
+       
+       if (otherPower == power) {
+           System.out.println("It's a tie! Try again!");        
+        } else if (otherPower > power) {
+            System.out.println("You lost");
+        } else {
+            System.out.println("You won!");
+        }
+        
+    }
+    
     /**
      * Returns int dir value as string
      * @param num takes num value of direction
@@ -313,6 +327,15 @@ public class Rover
         System.out.println(this.name + " could not complete action \"" + action + "\" because it is dead");
     }
 
+    private int randomWithRange(int min, int max) {
+        int range = (max - min) + 1;
+        return (int)(Math.random() * range) + min;
+    }
+    
+    /**
+     * Returns name of the rover
+     * @return name of rover
+     */
     
     public String getName() {
         return this.name;

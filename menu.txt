@@ -1,0 +1,26 @@
+ _    _      _                            _         ___  ___               
+| |  | |    | |                          | |        |  \/  |               
+| |  | | ___| | ___ ___  _ __ ___   ___  | |_ ___   | .  . | __ _ _ __ ___ 
+| |/\| |/ _ \ |/ __/ _ \| '_ ` _ \ / _ \ | __/ _ \  | |\/| |/ _` | '__/ __|
+\  /\  /  __/ | (_| (_) | | | | | |  __/ | || (_) | | |  | | (_| | |  \__ \
+ \/  \/ \___|_|\___\___/|_| |_| |_|\___|  \__\___/  \_|  |_/\__,_|_|  |___/
+
+This is the control panel for NASA's Copernicus project
+
+Enter the following commands and or numbers to execute a command
+
+quit ---- quit the program
+0    ---- move the rover
+	  requires an int to move
+1    ---- rotate right; changes direction
+2    ---- rotate left; changes direction
+3    ---- kill another rover; must give another rover to kill
+4    ---- charge rover's battery 
+	  must give int for seconds you would like to charge
+5    ---- teleport
+	  must give an x and a y value to teleport
+6    ---- go home; makes the rover go to it's original position
+7    ---- take picture
+8    ---- take picture with filter
+	  must give filter
+9    ---- transmit pictures back to earth, takes 5 seconds
