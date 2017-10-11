@@ -19,61 +19,18 @@ public class RoverRunner
     
     public static void main(String[] arrrggggggs)
     {
-        // Rover r1 = new Rover("Curiosity", 0, 0, 0);
-        /*Rover r2 = new Rover("Spirit", 0, 0, 0);
-        Rover r3 = new Rover("Sojourner", 0, 0, 0);
-        Rover r4 = new Rover("Oppertunity", 0, 0, 0);
-        
-        System.out.println(r4);
-        
-        r4.setName("Hello, World!");
-        printRover(r4);
-        
-        r4.move(3);
-        printRover(r4);
-        
-        r4.kill(r1);
-        r1.kill(r3);
-        
-        r2.kill(r2);
-        
-        r1.move(3);
-        System.out.println(r1);
-        r1.rotateLeft();
-        System.out.println(r1);
-        
-        r1.teleport(40,12);
-        System.out.println(r1);
-        
-        r1.goHome();
-        System.out.println(r1);
-        
+        try {
+                // Prints the menu.txt file to the console
+                BufferedReader br = new BufferedReader(new FileReader("menu.txt"));
+                String line = null;
+                 while ((line = br.readLine()) != null) {
+                   System.out.println(line);
+
+                }
+            } catch (IOException e){
+                System.out.println("Could not load menu");
+            }
         System.out.println();
-        
-        r1.takePicture();
-        r1.takePicture();
-        r1.takePicture();
-        r1.takePicture();
-        r1.takePicture();
-        r1.takePicture();
-        r1.takePicture();
-        r1.takePicture();
-        r1.takePicture();
-        r1.takePicture();
-        r1.takePicture();
-        r1.takePicture("Black and White");
-        
-        
-        r1.transmitPictures();
-        
-        r1.takePicture();*/
-        
-        /*r1.move(3);
-        r1.rotateRight();
-        r1.move(11);
-        
-        r1.teleport(10, -1);*/
-        
          // Make a SimpleScanner
         SimpleScanner input = new SimpleScanner();
         
@@ -94,16 +51,6 @@ public class RoverRunner
         
         while (running) {
             // Input name
-            
-            try {
-                BufferedReader br = new BufferedReader(new FileReader("menu.txt"));
-                String line = null;
-                 while ((line = br.readLine()) != null) {
-                   System.out.println(line);
-                }
-            } catch (IOException e){
-                System.out.println("Could not load menu");
-            }
             System.out.print("Enter the name of the Rover to act: ");
             String name = input.readString();
             
@@ -140,7 +87,7 @@ public class RoverRunner
                         System.out.println("Error: No such target.");
                     }
                 } else if (command.equals("4")){
-                    System.out.println("For how many second would you like to charge?");
+                    System.out.println("For how many seconds would you like to charge?");
                     int batt = input.readInt();
                     actor.chargeBattery(batt);
                 } else if (command.equals("5")) {
@@ -160,6 +107,22 @@ public class RoverRunner
                     actor.takePicture(filter);
                 } else if (command.equals("9")){
                     actor.transmitPictures();
+                } else if (command.equals("10")) {
+                    System.out.print("Enter the name the target rover: ");
+                    String targetName = input.readString();
+
+                    Rover target = group.find(targetName);
+                    
+                    System.out.println("Enter how much damage you woul like to instill: ");
+                    int attackPower = input.readInt();
+                    
+                    if (target != null) {
+                        actor.attack(target, attackPower);
+                        System.out.println(target);
+                    }
+                    else {
+                        System.out.println("Error: No such target.");
+                    }
                 }
                 else {
                     System.out.println("Error: Invalid command.");

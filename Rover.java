@@ -22,6 +22,8 @@ public class Rover
     private double battery;
     private int numPics;
     private int maxPics;
+    private int health;
+
 
     
     // constructor(s)
@@ -41,6 +43,7 @@ public class Rover
         this.battery = 50;
         this.numPics = 0;
         this.maxPics = 10;
+        this.health = 100;
 
     }
 
@@ -66,16 +69,16 @@ public class Rover
         if (battery > 0 && battery <= 100) {
             double battLeft = 100 - battery;
             if (b > battLeft){
-                System.out.println("Charged to 100");
+                System.out.println(this.name + "'s charged to 100");
                 this.battery = 100;
             } else {
                 if (this.battery + b <= 0) {
                     this.battery = 0;
                     this.isAlive = false;
-                    System.out.println("Battery at zero! Please charge!"); 
+                    System.out.println(this.name + "'s battery at zero! Please charge!"); 
                 } else {
                     this.battery += b;
-                    System.out.println("Battery changed by " + b + ". Battery now at " + this.battery + "!");
+                    System.out.println(this.name + "'s battery changed by " + b + ". Battery now at " + this.battery + "!");
                 }
             }
         }     
@@ -89,14 +92,6 @@ public class Rover
     public void chargeBattery(int time) {
 
         System.out.println("Charging battery for " + time + " seconds!");
-        
-        Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            @Override
-            public void run() {
-               System.out.println(".");
-            }
-        }, 0, time * 1000);
         
         try {
             Thread.sleep(time * 1000);
@@ -149,7 +144,7 @@ public class Rover
                 dir = 3;
             }
 
-            System.out.println(name + " turned to the left");
+            System.out.println(name + " turned to the left and is now facing " + getDirectionName(dir));     
             adjustBattery(-5);
         } else {
             printDead("rotate left");
@@ -166,10 +161,10 @@ public class Rover
                 dir = 0;
             }
 
-            System.out.println(name + " turned to the right");     
+            System.out.println(name + " turned to the right and is now facing " + getDirectionName(dir));     
             adjustBattery(-5);
         } else {
-            printDead("rotate right");;
+            printDead("rotate right");
         }
     }
 
@@ -244,7 +239,9 @@ public class Rover
      * Called when storage is full. Prints and error message.
      */
     private void storageFull() {
-        System.out.println("Storage full! Please transmit pictures back to earth!");
+
+
+       System.out.println("Storage full! Please transmit pictures back to earth!" );
 
     }
 
@@ -294,16 +291,30 @@ public class Rover
 
     public void attack(Rover other, int power) {
         
-       int otherPower = randomWithRange(1, 100);
-       
-       if (otherPower == power) {
-           System.out.println("It's a tie! Try again!");        
-        } else if (otherPower > power) {
-            System.out.println("You lost");
+        if (isAlive && other.isAlive) {
+            System.out.println(this.name + " is attacking " + other.name + "!");
+            int otherHealth = other.health - power;
+            
+            if (otherHealth <= 0) {
+                this.kill(other);
+                other.adjustHealth(power);
+            } else {
+                other.adjustHealth(power);
+                this.adjustBattery(-10);
+                other.adjustBattery(-10);
+            }
         } else {
-            System.out.println("You won!");
+            printDead("attack");
         }
-        
+    }
+    
+    public void adjustHealth(int power) {
+        if (this.health - power <= 0){
+            this.health = 0;
+            this.isAlive = false;
+        }else {
+            this.health -= power;
+        }
     }
     
     /**
@@ -343,6 +354,6 @@ public class Rover
     
     public String toString() 
     {
-        return "Rover[name=" + name + ", x=" + x + ", y=" + y + ", dir=" + getDirectionName(this.dir) + "]";
+        return "Rover[name=" + name + ", x=" + x + ", y=" + y + ", dir=" + getDirectionName(this.dir) + "], health=" + this.health;
     }
 }

@@ -24,3 +24,6 @@ quit ---- quit the program
 8    ---- take picture with filter
 	  must give filter
 9    ---- transmit pictures back to earth, takes 5 seconds
+10   ---- attack other rover
+	  requires another rover to act on aswell as how much damage you want to 
+	  instill on it.
